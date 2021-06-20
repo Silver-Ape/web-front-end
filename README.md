@@ -1,20 +1,16 @@
-# pull official base image
-FROM node:13.12.0-alpine
+## Getting Started
 
-# set working directory
-WORKDIR /app
+First you need to have docker install locally
 
-# add `/app/node_modules/.bin` to $PATH
-ENV PATH /app/node_modules/.bin:$PATH
+You can check out [guide to install docker](https://docs.docker.com/get-docker/)
 
-# install app dependencies
-COPY package.json ./
-COPY package-lock.json ./
-RUN npm install --silent
-RUN npm install react-scripts@3.4.1 -g --silent
+To run application for development:
 
-# add app
-COPY . ./
+```bash
+# To build an image
+docker build -t sliver-ape/front-end .
 
-# start app
-CMD ["npm", "start"]
+# Start development server
+docker run -it  -v ${PWD}:/app -v /app/node_modules -p 3000:3000 -e CHOKIDAR_USEPOLLING=true sliver-ape/front-end
+
+```
